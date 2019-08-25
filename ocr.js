@@ -1,5 +1,5 @@
 var Tesseract = require('tesseract.js');
-var filename = 'pic.png';
+var filename = 'ndis_invoice.png';
 
 Tesseract.recognize(filename)
   .progress(function(p) {
