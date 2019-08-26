@@ -3,20 +3,31 @@ const request = require('request');
 const fs = require('fs');
 const sharp = require('sharp');
 const url =
-  'https://partnersincare.com.au/wp-content/uploads/elementor/thumbs/ndis4-Gives-you-weekly-proiftablity-per-participant-nvt92dzf39xgy7jt64eq7fy84pq0m86smgn0cjssso.jpg';
+  'https://planpartners.com.au/sites/default/files/inline-images/Plan%20Partners%20Example%20Invoice%20Cleaning%20and%20Home%20Maintenance-1.jpg';
 const filename = 'ndis_invoice.png';
 
 const writeFile = fs.createWriteStream(filename);
 
 function resizeImage(file) {
   return sharp(file)
-    .resize({
-      top: 370,
-      background: { r: 255, g: 255, b: 255, alpha: 0.5 },
-    })
+    .resize({})
     .greyscale()
     .normalise()
     .toBuffer();
+}
+
+function getTableHeaderPosition(words) {
+  return words.findIndex(word => {
+    console.log(word);
+    return word[0].toLowerCase() === 'date';
+  });
+}
+
+function getEndOfTablePosition(words) {
+  return words.findIndex(word => {
+    console.log(word);
+    return word[0].toLowerCase() === 'gst';
+  });
 }
 
 request(url)
@@ -31,11 +42,27 @@ request(url)
         })
         .catch(err => console.error(err))
         .then(function(result) {
-          console.log(Object.keys(result));
-          const words = result.words.map(word => {
-            return word.text;
+          // html
+          // confidence
+          // blocks
+          // psm
+          // oem
+          // version
+          // paragraphs
+          // lines
+          // words
+          // symbols
+
+          let tidiedWords;
+          result.lines.forEach(line => {
+            tidiedWords = line.words.map(word => {
+              const tidiedWord = word.text.replace('/()/gi', '');
+              return tidiedWord;
+            });
           });
-          console.log(words);
+
+          const tableHeaderPosition = getTableHeaderPosition(tidiedWords);
+          const endTablePosition = getEndOfTablePosition(tidiedWords);
         })
         .finally(() => {
           process.exit();
