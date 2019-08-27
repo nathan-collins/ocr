@@ -3,6 +3,8 @@ const request = require('request');
 const fs = require('fs');
 const sharp = require('sharp');
 
+/**
+ */
 class ReadInvoice {
   /**
    */
@@ -27,7 +29,6 @@ class ReadInvoice {
   }
 
   /**
-   *
    * @param {Object} outputBuffer The image output buffer
    */
   scanImage(outputBuffer) {
@@ -48,6 +49,8 @@ class ReadInvoice {
   }
 
   /**
+   *
+   * @param {String} filename Filename path
    */
   resizeImage(filename) {
     return this.alterImage(filename);
