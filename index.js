@@ -1,12 +1,11 @@
-const request = require('request');
-const fs = require('fs');
-const url = 'http://tesseract.projectnaptha.com/img/eng_bw.png';
-var filename = 'pic.png';
+const readInvoice = require('./readInvoice');
 
-var writeFileStream = fs.createWriteStream(filename);
+const urlPath =
+  'https://planpartners.com.au/sites/default/files/inline-images/';
+const url =
+  urlPath +
+  'Plan%20Partners%20Example%20Invoice%20Cleaning%20and%20Home%20Maintenance-1.jpg';
+const filename = 'ndis_invoice.png';
 
-request(url)
-  .pipe(writeFileStream)
-  .on('close', function() {
-    console.log(url, 'saved to', filename);
-  });
+const invoice = new readInvoice(url, filename);
+invoice.download();
