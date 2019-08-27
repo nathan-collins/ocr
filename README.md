@@ -1,5 +1,7 @@
 # ocr
 
+To run the script, use the command below in a terminal
+
 ```
-node download-and-ocr.js
+node index.js
 ```
